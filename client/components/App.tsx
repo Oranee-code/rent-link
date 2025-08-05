@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <div className="app">
-        <h1 className="text-3xl font-bold underline">
-          Fullstack Boilerplate - with Fruits!
+        <h1 className="text-4xl font-bold ">
+          Rent Link
         </h1>
         <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul>
       </div>

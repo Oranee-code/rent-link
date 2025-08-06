@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * TODO: replace domain, clientId, and audience
      */
     <Auth0Provider
-      domain=""
-      clientId=""
+      domain={import.meta.env.VITE_AUTH0_DOMAIN || "dev-c7tn02knwt43gb5c.us.auth0.com"}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || "YOUR_CLIENT_ID_HERE"}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: '',
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE || "https://dev-c7tn02knwt43gb5c.us.auth0.com/api/v2/",
       }}
     >
       <QueryClientProvider client={queryClient}>

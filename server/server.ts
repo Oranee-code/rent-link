@@ -2,12 +2,19 @@ import express from 'express'
 import * as Path from 'node:path'
 
 import fruitRoutes from './routes/fruits.ts'
+import userRoutes from './routes/users.ts'
+import tenantRoutes from './routes/tenants.ts'
 
 const server = express()
 
 server.use(express.json())
 
+// Serve uploaded files
+server.use('/uploads', express.static('uploads'))
+
 server.use('/api/v1/fruits', fruitRoutes)
+server.use('/api/users', userRoutes)
+server.use('/api/tenants', tenantRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))

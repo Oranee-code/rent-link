@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * TODO: replace domain, clientId, and audience
      */
     <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN || "dev-c7tn02knwt43gb5c.us.auth0.com"}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || "YOUR_CLIENT_ID_HERE"}
+      domain={import.meta.env.VITE_AUTH0_DOMAIN || "whai-2025-oranee.au.auth0.com"}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || "ZaIR7TE0dswVeuZgXb2QC3IWbc4EYJS5"}
       authorizationParams={{
-        redirect_uri: window.location.origin,
-        audience: import.meta.env.VITE_AUTH0_AUDIENCE || "https://dev-c7tn02knwt43gb5c.us.auth0.com/api/v2/",
+        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL || window.location.origin,
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE || "https://whai-2025-oranee.au.auth0.com/api/v2/",
       }}
     >
       <QueryClientProvider client={queryClient}>

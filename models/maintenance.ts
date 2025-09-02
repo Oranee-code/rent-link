@@ -5,9 +5,9 @@ export interface MaintenanceRequest {
   landlordId: number
   title: string
   description: string
-  priority: 'low' | 'medium' | 'high' | 'urgent'
+  priority: 'low' | 'medium' |'urgent'
   status: 'pending' | 'in_progress' | 'completed' | 'cancelled'
-  category: 'plumbing' | 'electrical' | 'hvac' | 'appliance' | 'structural' | 'other'
+  category: 'plumbing' | 'electrical' | 'appliance' | 'structural' | 'other'
   createdAt: Date
   updatedAt: Date
   completedAt?: Date
@@ -19,6 +19,6 @@ export interface MaintenanceData {
   landlordId: number
   title: string
   description: string
-  priority: 'low' | 'medium' | 'high' | 'urgent'
-  category: 'plumbing' | 'electrical' | 'hvac' | 'appliance' | 'structural' | 'other'
+  priority: 'low' | 'medium' | 'urgent'
+  category: 'plumbing' | 'electrical' | 'appliance' | 'structural' | 'other'
 } 

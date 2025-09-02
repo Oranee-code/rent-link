@@ -60,9 +60,15 @@ function ProfileSettings() {
     }
   }
 
+  const { getAccessTokenSilently } = useAuth0()
+  
   const getAccessToken = async () => {
-    // This would be implemented with Auth0's getAccessTokenSilently
-    return 'mock-token'
+    try {
+      return await getAccessTokenSilently()
+    } catch (error) {
+      console.error('Error getting access token:', error)
+      throw error
+    }
   }
 
   const handleInputChange = (field: keyof UserProfile, value: any) => {

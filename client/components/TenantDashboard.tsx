@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import PaymentUpload from './PaymentUpload.tsx'
-import ProfileSettings from './ProfileSettings.tsx'
+import BankDetails from './BankDetails.tsx'
 
 function TenantDashboard() {
   const { user } = useAuth0()
-  const [activeTab, setActiveTab] = useState<'payments' | 'maintenance' | 'messages' | 'property' | 'profile'>('payments')
-  const [showPaymentUpload, setShowPaymentUpload] = useState(false)
-  const [selectedPayment, setSelectedPayment] = useState<{id: number, type: string, amount: number} | null>(null)
+  const [activeTab, setActiveTab] = useState<'payments' | 'maintenance' | 'messages' | 'property'>('payments')
+  const [showBankDetails, setShowBankDetails] = useState(false)
+  const [selectedPayment, setSelectedPayment] = useState<{id: number, type: string, amount: number, dueDate: string} | null>(null)
 
   const mockProperty = {
     id: 1,
@@ -154,16 +153,7 @@ function TenantDashboard() {
             >
               My Property
             </button>
-            <button
-              onClick={() => setActiveTab('profile')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'profile'
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Profile
-            </button>
+
           </nav>
         </div>
 
@@ -173,32 +163,31 @@ function TenantDashboard() {
             <PaymentsTab 
               payments={mockPayments}
               onUploadProof={(payment) => {
-                setSelectedPayment(payment)
-                setShowPaymentUpload(true)
+                setSelectedPayment({
+                  id: payment.id,
+                  type: payment.type,
+                  amount: payment.amount,
+                  dueDate: payment.dueDate
+                })
+                setShowBankDetails(true)
               }}
             />
           )}
           {activeTab === 'maintenance' && <MaintenanceTab maintenance={mockMaintenance} />}
           {activeTab === 'messages' && <MessagesTab />}
           {activeTab === 'property' && <PropertyTab property={mockProperty} />}
-          {activeTab === 'profile' && <ProfileSettings />}
+
         </div>
 
-        {/* Payment Upload Modal */}
-        {showPaymentUpload && selectedPayment && (
-          <PaymentUpload
-            paymentId={selectedPayment.id}
+        {/* Bank Details Modal */}
+        {showBankDetails && selectedPayment && (
+          <BankDetails
             paymentType={selectedPayment.type}
             amount={selectedPayment.amount}
+            dueDate={selectedPayment.dueDate}
             onClose={() => {
-              setShowPaymentUpload(false)
+              setShowBankDetails(false)
               setSelectedPayment(null)
-            }}
-            onSubmit={async (paymentId, proofFile) => {
-              // TODO: Implement file upload to server
-              console.log('Uploading proof for payment:', paymentId, proofFile)
-              // In real app, you would upload the file to your server
-              // and update the payment record with the proof URL
             }}
           />
         )}
@@ -212,7 +201,7 @@ function PaymentsTab({
   onUploadProof 
 }: { 
   payments: any[]
-  onUploadProof: (payment: {id: number, type: string, amount: number}) => void
+  onUploadProof: (payment: {id: number, type: string, amount: number, dueDate: string}) => void
 }) {
   return (
     <div>
@@ -227,12 +216,13 @@ function PaymentsTab({
                 onUploadProof({
                   id: pendingPayment.id,
                   type: pendingPayment.type,
-                  amount: pendingPayment.amount
+                  amount: pendingPayment.amount,
+                  dueDate: pendingPayment.dueDate
                 })
               }
             }}
           >
-            Upload Proof
+            View Bank Details
           </button>
           <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
             Request Extension
@@ -276,8 +266,16 @@ function PaymentsTab({
               <div className="text-right">
                 <p className="text-lg font-semibold">${payment.amount}</p>
                 {payment.status === 'pending' && (
-                  <button className="text-sm text-blue-600 hover:underline mt-1">
-                    Mark as Paid
+                  <button 
+                    className="text-sm text-blue-600 hover:underline mt-1"
+                    onClick={() => onUploadProof({
+                      id: payment.id,
+                      type: payment.type,
+                      amount: payment.amount,
+                      dueDate: payment.dueDate
+                    })}
+                  >
+                    View Bank Details
                   </button>
                 )}
               </div>

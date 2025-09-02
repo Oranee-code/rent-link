@@ -1,6 +1,6 @@
-import Dashboard from './Dashboard.tsx'
+import TenantDashboard from './TenantDashboard.tsx'
 
 function Home() {
-  return <Dashboard />
+  return <TenantDashboard />
 }
 export default Home

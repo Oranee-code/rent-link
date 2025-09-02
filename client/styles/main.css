@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom navigation styles */
+.nav-group {
+  @apply flex items-center space-x-4;
+}
+
+.nav-button {
+  @apply px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors;
+}
+
+.nav-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.signed-in-user {
+  @apply text-sm text-gray-600;
+}
